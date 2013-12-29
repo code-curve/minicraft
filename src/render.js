@@ -16,7 +16,7 @@ module.exports = function(canvasId) {
   function init() {
     canvas = document.getElementById(canvasId);
     ctx = canvas.getContext('2d');
-    ctx.font = '12pt monospace';
+    ctx.font = '18pt Calibri';
   
     // resize canvas to fit screen
     resize();
@@ -65,18 +65,22 @@ module.exports = function(canvasId) {
     if(entity.message) {
       console.group('Context');
       console.log('Translate', entity.x, entity.y);
-      console.log('Draw At', midX - camera.x, midY - camera.y)
+      console.log('Draw At', 2 * midX - camera.x, 2 * midY - camera.y,
+        sprite.w * 2, sprite.h * 2
+      )
       console.groupEnd('Context');
     }
-    ctx.translate(entity.x, entity.y);
+    ctx.translate(entity.x * 2, entity.y * 2);
     ctx.drawImage(sprite, 
-      midX - camera.x, 
-      midY - camera.y);
+      midX - camera.x * 2, 
+      midY - camera.y * 2,
+      sprite.w * 2,
+      sprite.h * 2);
      
     if(msg = entity.message) {
       renderMessage(entity, entity.message, 
-        midX - camera.x + sprite.w / 2,
-        midY - camera.y); 
+        midX - camera.x * 2 + sprite.w,
+        midY - camera.y * 2); 
     }
 
     ctx.restore();
@@ -84,7 +88,7 @@ module.exports = function(canvasId) {
 
   function renderMessage(entity, string, x, y){
     var textWidth, pad, halfway;
-
+    ctx.font = '8pt arial';
     if(entity.admin) {
       string = '♛' + string;
     }
@@ -101,7 +105,6 @@ module.exports = function(canvasId) {
     } else {
       ctx.fillStyle = '#fff';
     }
-    
     ctx.fillText(string, x - halfway, y - 10);
   }
  

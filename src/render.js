@@ -1,18 +1,13 @@
-var sprite = require('./sprite'),
+var sprites = require('./sprites'),
     sort = require('./sort');
     camera = require('./camera');
   
 module.exports = function(canvasId) {
-  var canvas, ctx, events, entities, sprites, height, width;
+  var canvas, ctx, events, entities, height, width;
   
   events = {};
-  entities = [];
-  
-  sprites = {
-    player: sprite('player.png', 32, 32),
-    stone: sprite('stone.png', 32, 48)
-  };
-  
+  entities = []; 
+ 
   function init() {
     canvas = document.getElementById(canvasId);
     ctx = canvas.getContext('2d');

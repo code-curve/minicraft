@@ -2,12 +2,14 @@ var firebase = require('./firebase'),
     render = require('./render')('game-canvas'),
     controls = require('./controls'),
     camera = require('./camera'),
-    ui = require('./interface');
+    ui = require('./interface'),
+    blockStore = require('./blocks');
 
 var players, blocks, player, playerRef, 
-actionCoolDown, messageTimeout;
+actionCoolDown, messageTimeout, blockType;
 
 actionCoolDown = 0;
+blockType = 0;
 
 player = {
   x: 10 * 32,
@@ -33,11 +35,15 @@ render.bindEntity(players);
 
 // when the document has loaded
 render.on('ready', function() {
+  
   // expose some externals to UI
   ui({
-    message: message
+    message: message,
+    changeBlock: function(block) {
+      blockType = block;
+    }
   });
-  
+ 
   render();  
 });
 
@@ -45,14 +51,13 @@ render.on('ready', function() {
 render.on('frame', function() {
   // check control states and update player
   var step, needsUpdate, blockRef;
-
   step = 4;
   needsUpdate = false;
   
   if(actionCoolDown) {
     actionCoolDown -= 1;
   }  
- 
+  
   if(controls.a) {
     if(player.x - step >= 0) {
       player.x -= step;
@@ -66,18 +71,18 @@ render.on('frame', function() {
   if(controls.w) {
     if(player.y - step >= 0) {
       player.y -= step;
+      needsUpdate = true;
     }
-    needsUpdate = true;
   } else if(controls.s) {
     player.y += step;
     needsUpdate = true;
   }
 
-  if(controls.enter && !actionCoolDown) {
+  if(controls.space && !actionCoolDown) {
+    console.log(blockStore, blockType);
     blockRef = firebase.child('blocks');
     blockRef.set({
-      type: 0,
-      sprite: 'stone',
+      sprite: blockStore[blockType].name,
       x: player.x - player.x % 32,
       y: player.y - player.y % 32
     });

@@ -16,9 +16,10 @@ module.exports = (function() {
     return function(e) {
       var mapped;
       mapped = keyMap[e.keyCode] || String.fromCharCode(e.keyCode);
-      states[mapped] = state;
+      states[mapped.toLowerCase()] = state;
     }
   }
+
   window.addEventListener('keydown', changeState(true));
   window.addEventListener('keyup', changeState(false));
   

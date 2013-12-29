@@ -62,13 +62,19 @@ module.exports = function(canvasId) {
     offsetY = 32 - sprite.h;
     
     ctx.save();
+    if(entity.message) {
+      console.group('Context');
+      console.log('Translate', entity.x, entity.y);
+      console.log('Draw At', midX - camera.x, midY - camera.y)
+      console.groupEnd('Context');
+    }
     ctx.translate(entity.x, entity.y);
-    ctx.drawImage(sprites[entity.sprite], 
+    ctx.drawImage(sprite, 
       midX - camera.x, 
       midY - camera.y);
      
     if(msg = entity.message) {
-      renderMessage(entity.message, 
+      renderMessage(entity, entity.message, 
         midX - camera.x + sprite.w / 2,
         midY - camera.y); 
     }
@@ -76,16 +82,26 @@ module.exports = function(canvasId) {
     ctx.restore();
   }
 
-  function renderMessage(string, x, y) {
+  function renderMessage(entity, string, x, y){
     var textWidth, pad, halfway;
-    
+
+    if(entity.admin) {
+      string = '♛' + string;
+    }
+
     pad = 4;
     textWidth = ctx.measureText(string).width;
     halfway = textWidth / 2;    
 
     ctx.fillStyle = 'rgba(0,0,0,0.6)';
     ctx.fillRect(x - pad / 2 - halfway, y - 20, textWidth + pad, 14);
-    ctx.fillStyle = '#fff';
+    
+    if(entity.admin) {
+      ctx.fillStyle = '#ffaa00';
+    } else {
+      ctx.fillStyle = '#fff';
+    }
+    
     ctx.fillText(string, x - halfway, y - 10);
   }
  

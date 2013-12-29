@@ -10,8 +10,9 @@ actionCoolDown, messageTimeout;
 actionCoolDown = 0;
 
 player = {
-  x: 0,
-  y: 0,
+  x: 10 * 32,
+  y: 10 * 32,
+  admin: true,
   sprite: 'player' 
 };
 
@@ -32,9 +33,11 @@ render.bindEntity(players);
 
 // when the document has loaded
 render.on('ready', function() {
+  // expose some externals to UI
   ui({
     message: message
   });
+  
   render();  
 });
 
@@ -50,23 +53,27 @@ render.on('frame', function() {
     actionCoolDown -= 1;
   }  
  
-  if(controls.left) {
-    player.x -= step;
-    needsUpdate = true;
-  } else if(controls.right) {
+  if(controls.a) {
+    if(player.x - step >= 0) {
+      player.x -= step;
+      needsUpdate = true;
+    }
+  } else if(controls.d) {
     player.x += step;
     needsUpdate = true;
   }
 
-  if(controls.up) {
-    player.y -= step;
+  if(controls.w) {
+    if(player.y - step >= 0) {
+      player.y -= step;
+    }
     needsUpdate = true;
-  } else if(controls.down) {
+  } else if(controls.s) {
     player.y += step;
     needsUpdate = true;
   }
 
-  if(controls.space && !actionCoolDown) {
+  if(controls.enter && !actionCoolDown) {
     blockRef = firebase.child('blocks');
     blockRef.set({
       type: 0,

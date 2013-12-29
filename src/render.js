@@ -1,4 +1,5 @@
-var sprite = require('./sprite');
+var sprite = require('./sprite'),
+    sort = require('./sort');
 
 module.exports = function(canvasId) {
   var canvas, ctx, events, entities, sprites, height, width;
@@ -41,15 +42,20 @@ module.exports = function(canvasId) {
   }
 
   function renderEntityList(entityList) {
+    // sort entities into ascending y order
+    entityList = sort(entityList, 'y');
     for(var id in entityList) {
       renderEntity(entityList[id]);
     }
   }
-  
+
+    
   function renderEntity(entity) {
     ctx.save();
     ctx.translate(entity.x, entity.y);
-    ctx.drawImage(sprites[entity.sprite], 0, 0);
+    ctx.drawImage(sprites[entity.sprite],
+      32 - entity.sprite.width, 
+      32 - entity.sprite.height);
     ctx.restore();
   }
  

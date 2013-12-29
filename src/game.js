@@ -1,6 +1,6 @@
-var firebase = require('./firebase');
-var render = require('./render')('game-canvas');
-var controls = require('./controls');
+var firebase = require('./firebase'),
+    render = require('./render')('game-canvas'),
+    controls = require('./controls');
 
 var players, blocks, player, playerRef, actionCoolDown;
 

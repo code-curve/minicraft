@@ -1,13 +1,12 @@
 module.exports = function(grunt) {
   grunt.initConfig({
-    concat_sourcemap: {
-      options: {
-        seperator:'\n;;'
-      },
-      dist: {
-        files: {
-          'minicraft.js': ['src/*.js']
-        }
+    browserify: {
+      basic: {
+        src:['src/*.js'],
+        dest: 'minicraft.js', 
+        options: {
+          debug: true
+        },
       }
     },
     watch: {
@@ -17,6 +16,6 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-concat-sourcemap');
-  grunt.registerTask('default', ['concat_sourcemap']);
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.registerTask('default', ['browserify']);
 };

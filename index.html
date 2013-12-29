@@ -6,8 +6,20 @@
   <link rel='stylesheet' href='css/index.css'></link>
 </head>
 <body>
+  <div class='top hud'>
+    <ul class='block types'>
+      <li><img src='img/stone.png'></img></li>
+    </ul>
+  </div>
   <canvas id='game-canvas'></canvas>
-  
+  <div class='hud'>
+    <div class='message entry'>
+      <div class='-auto'>
+        <input id='message'></input>
+      </div>
+      <button>Send</button>
+    </div>
+  </div>
   <script src='lib/firebase.js'></script>
   <script src='minicraft.js'></script>
 </body>

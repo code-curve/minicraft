@@ -1,9 +1,11 @@
 var firebase = require('./firebase'),
     render = require('./render')('game-canvas'),
     controls = require('./controls'),
-    camera = require('./camera');
+    camera = require('./camera'),
+    ui = require('./interface');
 
-var players, blocks, player, playerRef, actionCoolDown;
+var players, blocks, player, playerRef, 
+actionCoolDown, messageTimeout;
 
 actionCoolDown = 0;
 
@@ -13,7 +15,6 @@ player = {
   sprite: 'player' 
 };
 
-console.log(camera);
 camera.follow(player);
 
 // create a new player for this user
@@ -31,6 +32,9 @@ render.bindEntity(players);
 
 // when the document has loaded
 render.on('ready', function() {
+  ui({
+    message: message
+  });
   render();  
 });
 
@@ -77,3 +81,16 @@ render.on('frame', function() {
     playerRef.set(player);
   }
 });
+
+
+
+function message(text) {
+  clearTimeout(messageTimeout);
+  player.message = text;
+  playerRef.set(player);
+
+  messageTimeout = setTimeout(function() {
+    delete player.message;
+    playerRef.set(player);
+  }, 5000);
+}

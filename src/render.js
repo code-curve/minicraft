@@ -16,7 +16,8 @@ module.exports = function(canvasId) {
   function init() {
     canvas = document.getElementById(canvasId);
     ctx = canvas.getContext('2d');
-    
+    ctx.font = '12pt monospace';
+  
     // resize canvas to fit screen
     resize();
     
@@ -52,18 +53,40 @@ module.exports = function(canvasId) {
 
     
   function renderEntity(entity) {
-    var offsetX, offsetY, sprite;
+    var offsetX, offsetY, sprite, midX, midY, msg;
+
     sprite = sprites[entity.sprite];
-      
+    midX = width / 2;
+    midY = height / 2;      
     offsetX = 32 - sprite.w;
     offsetY = 32 - sprite.h;
-
+    
     ctx.save();
     ctx.translate(entity.x, entity.y);
     ctx.drawImage(sprites[entity.sprite], 
-      width / 2 - camera.x, 
-      height / 2 - camera.y);
+      midX - camera.x, 
+      midY - camera.y);
+     
+    if(msg = entity.message) {
+      renderMessage(entity.message, 
+        midX - camera.x + sprite.w / 2,
+        midY - camera.y); 
+    }
+
     ctx.restore();
+  }
+
+  function renderMessage(string, x, y) {
+    var textWidth, pad, halfway;
+    
+    pad = 4;
+    textWidth = ctx.measureText(string).width;
+    halfway = textWidth / 2;    
+
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(x - pad / 2 - halfway, y - 20, textWidth + pad, 14);
+    ctx.fillStyle = '#fff';
+    ctx.fillText(string, x - halfway, y - 10);
   }
  
   render.bindEntity = function(entity) {

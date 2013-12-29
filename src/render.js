@@ -7,7 +7,8 @@ module.exports = function(canvasId) {
   entities = [];
   
   sprites = {
-    player: sprite('player.png')
+    player: sprite('player.png'),
+    stone: sprite('stone.png')
   };
   
   function init() {
@@ -27,8 +28,8 @@ module.exports = function(canvasId) {
   }
 
   function render() {
-    //setTimeout(render, 1000);
-    requestAnimationFrame(render);
+    setTimeout(render, 50);
+    //requestAnimationFrame(render);
     render.trigger('frame');
     
     ctx.fillStyle = 'green';

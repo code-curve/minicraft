@@ -1,0 +1,10 @@
+TODO
+----
+
+Collision detection
+Cull offscreen tiles
+Authentication
+Persisting Players
+Random Worlds
+
+

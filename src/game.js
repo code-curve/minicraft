@@ -50,6 +50,11 @@ render.on('ready', function() {
 // update
 render.on('frame', function() {
   // check control states and update player
+  updatePlayer();
+  
+});
+
+function updatePlayer() {
   var step, needsUpdate, blockRef;
   step = 4;
   needsUpdate = false;
@@ -92,9 +97,7 @@ render.on('frame', function() {
   if(needsUpdate) {
     playerRef.set(player);
   }
-});
-
-
+}
 
 function message(text) {
   clearTimeout(messageTimeout);

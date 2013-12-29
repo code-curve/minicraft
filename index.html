@@ -7,9 +7,9 @@
 </head>
 <body>
   <div class='top hud'>
-    <ul class='block types'>
-      <li><img src='img/stone.png'></img></li>
-    </ul>
+    <div id='blocks' class='block types'>
+      
+    </div>
   </div>
   <canvas id='game-canvas'></canvas>
   <div class='hud'>
@@ -17,7 +17,7 @@
       <div class='-auto'>
         <input id='message'></input>
       </div>
-      <button>Send</button>
+      <button id='send'>Send</button>
     </div>
   </div>
   <script src='lib/firebase.js'></script>

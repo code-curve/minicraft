@@ -11,7 +11,6 @@ module.exports = function(canvasId) {
   function init() {
     canvas = document.getElementById(canvasId);
     ctx = canvas.getContext('2d');
-    ctx.font = '18pt Calibri';
   
     // resize canvas to fit screen
     resize();
@@ -53,8 +52,8 @@ module.exports = function(canvasId) {
     sprite = sprites[entity.sprite];
     midX = width / 2;
     midY = height / 2;      
-    offsetX = 32 - sprite.w;
-    offsetY = 32 - sprite.h;
+    offsetX = 64 - sprite.w * 2;
+    offsetY = 64 - sprite.h * 2;
     
     ctx.save();
     if(entity.message) {

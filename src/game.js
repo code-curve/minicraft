@@ -1,6 +1,7 @@
 var firebase = require('./firebase'),
     render = require('./render')('game-canvas'),
-    controls = require('./controls');
+    controls = require('./controls'),
+    camera = require('./camera');
 
 var players, blocks, player, playerRef, actionCoolDown;
 
@@ -11,6 +12,9 @@ player = {
   y: 0,
   sprite: 'player' 
 };
+
+console.log(camera);
+camera.follow(player);
 
 // create a new player for this user
 playerRef = firebase.child('players');

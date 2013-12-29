@@ -1,6 +1,7 @@
 var sprite = require('./sprite'),
     sort = require('./sort');
-
+    camera = require('./camera');
+  
 module.exports = function(canvasId) {
   var canvas, ctx, events, entities, sprites, height, width;
   
@@ -8,8 +9,8 @@ module.exports = function(canvasId) {
   entities = [];
   
   sprites = {
-    player: sprite('player.png'),
-    stone: sprite('stone.png')
+    player: sprite('player.png', 32, 32),
+    stone: sprite('stone.png', 32, 48)
   };
   
   function init() {
@@ -51,11 +52,17 @@ module.exports = function(canvasId) {
 
     
   function renderEntity(entity) {
+    var offsetX, offsetY, sprite;
+    sprite = sprites[entity.sprite];
+      
+    offsetX = 32 - sprite.w;
+    offsetY = 32 - sprite.h;
+
     ctx.save();
     ctx.translate(entity.x, entity.y);
-    ctx.drawImage(sprites[entity.sprite],
-      32 - entity.sprite.width, 
-      32 - entity.sprite.height);
+    ctx.drawImage(sprites[entity.sprite], 
+      width / 2 - camera.x, 
+      height / 2 - camera.y);
     ctx.restore();
   }
  

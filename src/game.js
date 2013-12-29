@@ -31,4 +31,19 @@ render.on('ready', function() {
 // update
 render.on('frame', function() {
   // check control states and update player
+  var step = 4;
+   
+  if(controls.left) {
+    player.x -= step;
+  } else if(controls.right) {
+    player.x += step;
+  }
+console.log(controls.down);
+  if(controls.up) {
+    player.y -= step;
+  } else if(controls.down) {
+    player.y += step;
+  }
+
+  playerRef.set(player);
 });

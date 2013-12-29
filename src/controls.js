@@ -6,7 +6,7 @@ module.exports = (function() {
     37: 'left',
     38: 'up',
     39: 'right',
-    30: 'down',
+    40: 'down',
     32: 'space',
     13: 'enter',
     9: 'tab'
@@ -19,9 +19,8 @@ module.exports = (function() {
       states[mapped] = state;
     }
   }
-
-  document.addEventListener('keydown', changeState(true));
-  document.addEventListener('keyup', changeState(false));
+  window.addEventListener('keydown', changeState(true));
+  window.addEventListener('keyup', changeState(false));
   
   return states;
-});
+})();

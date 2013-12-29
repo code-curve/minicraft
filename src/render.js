@@ -27,28 +27,28 @@ module.exports = function(canvasId) {
   }
 
   function render() {
-    requestAnimationFrame(render, 1000);
-    //render.trigger('frame');
+    //setTimeout(render, 1000);
+    requestAnimationFrame(render);
+    render.trigger('frame');
+    
     ctx.fillStyle = 'green';
     ctx.fillRect(0, 0, width, height);
-     
+       
     for(var i = 0; i < entities.length; i++) {
       renderEntityList(entities[i]);
     }
   }
 
   function renderEntityList(entityList) {
-    console.log(entityList);
-    for(var id in entityList) { 
+    for(var id in entityList) {
       renderEntity(entityList[id]);
     }
   }
   
   function renderEntity(entity) {
     ctx.save();
-    ctx.translate(entity.x);
-    ctx.translate(entity.y); 
-    ctx.drawImage(sprites[entity.spriteId], 0, 0);
+    ctx.translate(entity.x, entity.y);
+    ctx.drawImage(sprites[entity.sprite], 0, 0);
     ctx.restore();
   }
  

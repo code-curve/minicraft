@@ -55,9 +55,12 @@ render.on('frame', function() {
 });
 
 function updatePlayer() {
-  var step, needsUpdate, blockRef;
+  var step, blockRef, movement;
   step = 4;
-  needsUpdate = false;
+  movement = {
+    x: 0,
+    y: 0
+  };
   
   if(actionCoolDown) {
     actionCoolDown -= 1;
@@ -65,23 +68,34 @@ function updatePlayer() {
   
   if(controls.a) {
     if(player.x - step >= 0) {
-      player.x -= step;
-      needsUpdate = true;
+      movement.x = -step;
     }
   } else if(controls.d) {
-    player.x += step;
-    needsUpdate = true;
+    movement.x = step;
   }
 
   if(controls.w) {
     if(player.y - step >= 0) {
-      player.y -= step;
-      needsUpdate = true;
+      movement.y = -step;
     }
   } else if(controls.s) {
-    player.y += step;
-    needsUpdate = true;
+    movement.y = step;
   }
+
+  player.x += movement.x;
+  player.y += movement.y;
+
+  // check collisions at 
+  for(var id in blocks) {
+    var block = blocks[id];
+    // get hold of both sprites
+    //if (RectA.X1 < RectB.X2 && RectA.X2 > RectB.X1 &&
+    //RectA.Y1 < RectB.Y2 && RectA.Y2 > RectB.Y1) 
+    
+  } 
+    
+  // if we are going to move
+  playerRef.set(player);
 
   if(controls.space && !actionCoolDown) {
     console.log(blockStore, blockType);
@@ -92,10 +106,6 @@ function updatePlayer() {
       y: player.y - player.y % 32
     });
     actionCoolDown = 5;
-  }
-
-  if(needsUpdate) {
-    playerRef.set(player);
   }
 }
 
